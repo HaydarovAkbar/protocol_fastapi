@@ -1,6 +1,6 @@
 import uuid
 
-from sqlalchemy import Column, String, Boolean, Index
+from sqlalchemy import Column, String, Boolean, Index, DateTime
 from sqlalchemy.dialects.postgresql import UUID
 from sqlalchemy.orm import relationship
 
@@ -11,6 +11,8 @@ class DocumentType(Base):
     __tablename__ = "document_types"
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
     title = Column(String, nullable=False)
+    created_at = Column(DateTime, nullable=True)
+    updated_at = Column(DateTime, nullable=True)
 
 
 class DocumentId(Base):
@@ -20,6 +22,8 @@ class DocumentId(Base):
     document_type_id = Column(UUID(as_uuid=True), nullable=True)
 
     document_type = relationship("DocumentType", back_populates="document_ids")
+    created_at = Column(DateTime, nullable=True)
+    updated_at = Column(DateTime, nullable=True)
 
 
 class UserProfile(Base):
@@ -38,6 +42,8 @@ class UserProfile(Base):
     document_sr = relationship("DocumentId", back_populates="user_profiles")
 
     status = Column(Boolean, default=True)
+    created_at = Column(DateTime, nullable=True)
+    updated_at = Column(DateTime, nullable=True)
 
 
 class User(Base):
@@ -51,10 +57,11 @@ class User(Base):
     first_name = Column(String, nullable=False)
     last_name = Column(String, nullable=False)
     position = Column(String, nullable=True)
-
+    created_at = Column(DateTime, nullable=True)
+    updated_at = Column(DateTime, nullable=True)
     indexes = [
-        Index("ix_users_username_email", "username", "email"),
+        Index("ix_users_username", "username"),
     ]
     __table_args__ = (
-        Index("ix_users_username_email", "username", "email"),
+        Index("ix_users_username", "username"),
     )

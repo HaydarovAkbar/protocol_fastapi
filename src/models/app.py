@@ -1,6 +1,6 @@
 import uuid
 
-from sqlalchemy import Column, String, Boolean
+from sqlalchemy import Column, String, Boolean, DateTime
 from sqlalchemy.dialects.postgresql import UUID
 from sqlalchemy.orm import relationship
 
@@ -14,6 +14,9 @@ class WeightCategory(Base):
 
     status = Column(Boolean, default=True)
 
+    created_at = Column(DateTime, nullable=True)
+    updated_at = Column(DateTime, nullable=True)
+
 
 class AgeCategory(Base):
     __tablename__ = "age_categories"
@@ -22,6 +25,9 @@ class AgeCategory(Base):
 
     status = Column(Boolean, default=True)
 
+    created_at = Column(DateTime, nullable=True)
+    updated_at = Column(DateTime, nullable=True)
+
 
 class CompetitionStatus(Base):
     __tablename__ = "competition_statuses"
@@ -29,6 +35,9 @@ class CompetitionStatus(Base):
     title = Column(String, nullable=False)
 
     status = Column(Boolean, default=True)
+
+    created_at = Column(DateTime, nullable=True)
+    updated_at = Column(DateTime, nullable=True)
 
 
 class Competition(Base):
@@ -48,6 +57,9 @@ class Competition(Base):
 
     is_active = Column(Boolean, default=True)
 
+    created_at = Column(DateTime, nullable=True)
+    updated_at = Column(DateTime, nullable=True)
+
 
 class ApplicationStatus(Base):
     __tablename__ = "application_statuses"
@@ -55,6 +67,9 @@ class ApplicationStatus(Base):
     title = Column(String, nullable=False)
 
     status = Column(Boolean, default=True)
+
+    created_at = Column(DateTime, nullable=True)
+    updated_at = Column(DateTime, nullable=True)
 
 
 class Application(Base):
@@ -72,3 +87,6 @@ class Application(Base):
     weight_category = relationship("WeightCategory", back_populates="applications")
     age_category = relationship("AgeCategory", back_populates="applications")
     status = relationship("ApplicationStatus", back_populates="applications")
+
+    created_at = Column(DateTime, nullable=True)
+    updated_at = Column(DateTime, nullable=True)

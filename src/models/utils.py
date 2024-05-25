@@ -1,6 +1,6 @@
 import uuid
 
-from sqlalchemy import Column, String, Boolean
+from sqlalchemy import Column, String, Boolean, DateTime
 from sqlalchemy.dialects.postgresql import UUID
 from sqlalchemy.orm import relationship
 
@@ -17,6 +17,8 @@ class Country(Base):
     flag = Column(String, nullable=True)
 
     status = Column(Boolean, default=True)
+    created_at = Column(DateTime, nullable=True)
+    updated_at = Column(DateTime, nullable=True)
 
 
 class Region(Base):
@@ -26,6 +28,8 @@ class Region(Base):
     country = relationship("Country", back_populates="regions")
 
     status = Column(Boolean, default=True)
+    created_at = Column(DateTime, nullable=True)
+    updated_at = Column(DateTime, nullable=True)
 
 
 class District(Base):
@@ -35,3 +39,5 @@ class District(Base):
     region = relationship("Region", back_populates="districts")
 
     status = Column(Boolean, default=True)
+    created_at = Column(DateTime, nullable=True)
+    updated_at = Column(DateTime, nullable=True)
