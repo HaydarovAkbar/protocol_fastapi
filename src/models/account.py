@@ -1,6 +1,6 @@
 import uuid
 
-from sqlalchemy import Column, String, Boolean
+from sqlalchemy import Column, String, Boolean, Index
 from sqlalchemy.dialects.postgresql import UUID
 from sqlalchemy.orm import relationship
 
@@ -38,3 +38,23 @@ class UserProfile(Base):
     document_sr = relationship("DocumentId", back_populates="user_profiles")
 
     status = Column(Boolean, default=True)
+
+
+class User(Base):
+    __tablename__ = "users"
+    id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
+    username = Column(String, nullable=False, unique=True)
+    password = Column(String, nullable=False)
+    is_active = Column(Boolean, default=True)
+    is_superuser = Column(Boolean, default=False)
+
+    first_name = Column(String, nullable=False)
+    last_name = Column(String, nullable=False)
+    position = Column(String, nullable=True)
+
+    indexes = [
+        Index("ix_users_username_email", "username", "email"),
+    ]
+    __table_args__ = (
+        Index("ix_users_username_email", "username", "email"),
+    )
